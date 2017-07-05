@@ -14,7 +14,7 @@ import { TGrid } from "./TGrid.js";
 import { Globals, TLight, TAvatar, TScene } from "./TObject.js";
 import { TWindow, TTextLabel, TPedestal } from "./TWindow.js";
 import { TLazySusan, TSlider, TRectangle } from "./TObjects.js";
-import { TUSA, TCompass, TEarth } from "./TEarth.js";
+import { TUSA, TCompass, TEarth, TFollowGhost } from "./TEarth.js";
 import { TSpreadsheet } from "./TSpreadsheet.js";
 import { TSlideShow } from "./TSlideShow.js";
 import { TSystemButtons } from "./TSystemButtons.js";
