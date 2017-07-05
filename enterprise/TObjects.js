@@ -310,10 +310,12 @@ var TGhost = TTrackball.subclass('users.TGhost',
       this.qSpin.set(0,0,0,1);
       isChasing = false;
       console.log('Stopped chasing!');
+      return true;
     },
     onPointerLeave: function(pEvt){
       isChasing = true;
       console.log('Is Chasing!');
+      return true;
     },
   },
   'behavior',
