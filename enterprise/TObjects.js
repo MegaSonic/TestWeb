@@ -294,11 +294,10 @@ var TGhost = TTrackball.subclass('users.TGhost',
       else 
         this.chasing = Globals.tAvatar;
 
-      
-
       isChasing = true;
-      this.setObject3D(new THREE.Group());
       this.object3D.name = 'TGhost';
+      this.setObject3D(new THREE.Group());
+      
 
       if (parent)
         parent.addChild(this);

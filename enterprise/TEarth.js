@@ -38,8 +38,7 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
       console.log('After adding ghost');
     }
   }
-
-  );
+);
 
 var TCompass = TObject.subclass('TCompass',
   'properties',{
