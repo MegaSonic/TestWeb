@@ -280,7 +280,7 @@ var TTrackball = TObject.subclass('users.TTrackball',
   }
 );
 
-var TGhost = TTrackball.subclass('users.TGhost', 
+var TGhost = TObject.subclass('users.TGhost', 
   'properties', {
     chasing: null,
     isChasing: null
@@ -317,13 +317,29 @@ var TGhost = TTrackball.subclass('users.TGhost',
       console.log('Is Chasing!');
       return true;
     },
+    onPointerMove: function(pEvt){
+      if(pEvt.ray3D.ray.intersectSphere(this.sphere, this.toVector))
+      {
+        this.object3D.worldToLocal(this.toVector);
+        this.toVector.normalize();
+        this.vec.copy(this.fromVector);
+        this.vec.add(this.toVector);
+        this.vec.normalize();
+        this.vec.add(this.toVector);
+        this.vec.normalize();
+        this.qSpin.setFromUnitVectors(this.vec, this.toVector);
+        this.object3D.quaternion.multiply(this.qSpin);
+      }
+      
+      return true;
+    }
   },
   'behavior',
   {
     update: function(time, tScene){
       if (isChasing) {
         this.goTo(this.chasing.object3D.position, null, null, 360);
-        console.log(this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
+        //console.log(this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
 
       }
 
