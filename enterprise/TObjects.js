@@ -288,7 +288,6 @@ var TGhost = TTrackball.subclass('users.TGhost',
 
   'initialize', {
     initialize: function(parent, chase) {
-
       if (chase)
         this.chasing = chase;
       else 
@@ -325,12 +324,9 @@ var TGhost = TTrackball.subclass('users.TGhost',
 
       }
 
-
-      if(this.qSpin.w <0.9999)
-            this.object3D.quaternion.multiply(this.qSpin);
     }
   }
-  );
+);
 
 
 // TLazySusan - similar to the TTrackball, allows the user to manipulate an object by spinning around the Y-axis.
