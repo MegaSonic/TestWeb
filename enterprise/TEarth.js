@@ -14,7 +14,8 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
 
   'properties',{
     action: null,
-    radius: null
+    radius: null,
+    ghost: null
   },
 
   'initialize',{
@@ -31,11 +32,18 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
 
       console.log('Before adding ghost');
 
-      var ghost = new TGhost(this);
+      ghost = new TGhost(this);
       if(parent)parent.addChild(this);
       if(onComplete)onComplete(this);
 
       console.log('After adding ghost');
+    }
+  },
+  'behavior',
+  {
+    update: function(time, tScene){
+      this.object3D.position = ghost.object3D.position;
+
     }
   }
 );
