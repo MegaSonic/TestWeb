@@ -42,7 +42,7 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
   'behavior',
   {
     update: function(time, tScene){
-      this.object3D.position = ghost.object3D.position;
+      this.object3D.position.copy(ghost.object3D.position);
 
     }
   }
