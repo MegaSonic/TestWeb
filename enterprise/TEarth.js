@@ -39,6 +39,24 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
       console.log('After adding ghost');
     }
   },
+  'events',
+  {
+    onPointerOver: function(pEvt){
+      ghost.isChasing = false;
+      console.log('Stopped chasing!');
+      return true;
+    },
+    onPointerLeave: function(pEvt){
+      ghost.isChasing = true;
+      console.log('Is Chasing!');
+      return true;
+    },
+    onPointerMove: function(pEvt){
+      console.log('Moving!');
+      
+      return true;
+    }
+  },
   'behavior',
   {
     update: function(time, tScene){

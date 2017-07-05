@@ -305,23 +305,6 @@ var TGhost = TObject.subclass('users.TGhost',
     isContainer: function(){return true;}
   },
 
-  'events', {
-    onPointerOver: function(pEvt){
-      isChasing = false;
-      console.log('Stopped chasing!');
-      return true;
-    },
-    onPointerLeave: function(pEvt){
-      isChasing = true;
-      console.log('Is Chasing!');
-      return true;
-    },
-    onPointerMove: function(pEvt){
-      console.log('Moving!');
-      
-      return true;
-    }
-  },
   'behavior',
   {
     update: function(time, tScene){
