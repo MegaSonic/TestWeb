@@ -282,7 +282,7 @@ var TTrackball = TObject.subclass('users.TTrackball',
 
 var TGhost = TTrackball.subclass('users.TGhost', 
   'properties', {
-    chasing: null
+    chasing: null,
     isChasing: null
   },
 
