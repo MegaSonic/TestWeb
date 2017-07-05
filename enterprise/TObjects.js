@@ -307,7 +307,6 @@ var TGhost = TObject.subclass('users.TGhost',
 
   'events', {
     onPointerOver: function(pEvt){
-      this.qSpin.set(0,0,0,1);
       isChasing = false;
       console.log('Stopped chasing!');
       return true;
@@ -318,18 +317,7 @@ var TGhost = TObject.subclass('users.TGhost',
       return true;
     },
     onPointerMove: function(pEvt){
-      if(pEvt.ray3D.ray.intersectSphere(this.sphere, this.toVector))
-      {
-        this.object3D.worldToLocal(this.toVector);
-        this.toVector.normalize();
-        this.vec.copy(this.fromVector);
-        this.vec.add(this.toVector);
-        this.vec.normalize();
-        this.vec.add(this.toVector);
-        this.vec.normalize();
-        this.qSpin.setFromUnitVectors(this.vec, this.toVector);
-        this.object3D.quaternion.multiply(this.qSpin);
-      }
+      console.log('Moving!');
       
       return true;
     }
