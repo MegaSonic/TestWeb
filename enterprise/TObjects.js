@@ -308,16 +308,22 @@ var TGhost = TTrackball.subclass('users.TGhost',
     onPointerOver: function(pEvt){
       this.qSpin.set(0,0,0,1);
       isChasing = false;
+      console.log("Stopped chasing!");
     },
     onPointerLeave: function(pEvt){
       isChasing = true;
+      console.log("Is Chasing!");
     },
   },
   'behavior',
   {
     update: function(time, tScene){
-      if (isChasing)
-      this.goTo(this.chasing.object3D.position, null, null, 360);
+      if (isChasing) {
+        this.goTo(this.chasing.object3D.position, null, null, 360);
+        console.log(this.object3D.position.x + ", " + this.object3D.position.y + ", " + this.object3D.position.z);
+
+      }
+
 
       if(this.qSpin.w <0.9999)
             this.object3D.quaternion.multiply(this.qSpin);
