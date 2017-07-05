@@ -29,9 +29,13 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
       this.setObject3D(sphere);
       this.object3D.name = 'TFollowGhost';
 
+      console.log('Before adding ghost');
+
       var ghost = new TGhost(this);
       if(parent)parent.addChild(this);
       if(onComplete)onComplete(this);
+
+      console.log('After adding ghost');
     }
   }
 

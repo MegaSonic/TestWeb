@@ -310,11 +310,11 @@ var TGhost = TTrackball.subclass('users.TGhost',
     onPointerOver: function(pEvt){
       this.qSpin.set(0,0,0,1);
       isChasing = false;
-      console.log("Stopped chasing!");
+      console.log('Stopped chasing!');
     },
     onPointerLeave: function(pEvt){
       isChasing = true;
-      console.log("Is Chasing!");
+      console.log('Is Chasing!');
     },
   },
   'behavior',
@@ -322,7 +322,7 @@ var TGhost = TTrackball.subclass('users.TGhost',
     update: function(time, tScene){
       if (isChasing) {
         this.goTo(this.chasing.object3D.position, null, null, 360);
-        console.log(this.object3D.position.x + ", " + this.object3D.position.y + ", " + this.object3D.position.z);
+        console.log(this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
 
       }
 
@@ -331,11 +331,6 @@ var TGhost = TTrackball.subclass('users.TGhost',
             this.object3D.quaternion.multiply(this.qSpin);
     }
   }
-
-
-
-
-
   );
 
 
