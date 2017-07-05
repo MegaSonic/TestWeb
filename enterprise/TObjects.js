@@ -283,10 +283,12 @@ var TTrackball = TObject.subclass('users.TTrackball',
 var TGhost = TTrackball.subclass('users.TGhost', 
   'properties', {
     chasing: null
+    isChasing: null
   },
 
   'initialize', {
     initialize: function(parent, chase) {
+
       if (chase)
         this.chasing = chase;
       else 
@@ -295,6 +297,7 @@ var TGhost = TTrackball.subclass('users.TGhost',
       if (parent)
         parent.addChild(this);
 
+      isChasing = true;
       this.setObject3D(new THREE.Group());
       this.object3D.name = 'TGhost';
     },
@@ -304,7 +307,21 @@ var TGhost = TTrackball.subclass('users.TGhost',
   'events', {
     onPointerOver: function(pEvt){
       this.qSpin.set(0,0,0,1);
+      isChasing = false;
     },
+    onPointerLeave: function(pEvt){
+      isChasing = true;
+    },
+  },
+  'behavior',
+  {
+    update: function(time, tScene){
+      if (isChasing)
+      this.goTo(this.chasing.object3D.position, null, null, 360);
+
+      if(this.qSpin.w <0.9999)
+            this.object3D.quaternion.multiply(this.qSpin);
+    }
   }
 
 
@@ -897,5 +914,6 @@ export {
   TSlider,
   TColorSphere,
   TColorWheel,
-  TCube
+  TCube,
+  TGhost
 }

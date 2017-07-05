@@ -2,13 +2,40 @@
 // davidasmith@gmail.com
 // 919-244-4448
 
-// This implements a number of toy objects. 
+// This implements a number of toy objects.
 // A four point compass with a tetrahedron, cube, sphere and torus knot
 // A globe of the Eart and Moon (moon is incomplete), a group of planets to provide orientation to the user (deprecated), and a height map of the US as a functional demo
 
 /*global THREE*/
 import { Globals, TObject } from "./TObject.js";
-import { TSlider, TRectangle, TTrackball } from "./TObjects.js";
+import { TSlider, TRectangle, TTrackball, TGhost } from "./TObjects.js";
+
+var TFollowGhost = TObject.subclass('TFollowGhost', 
+
+  'properties',{
+    action: null,
+    radius: null
+  },
+
+  'initialize',{
+    initialize: function(parent, onComplete, radius){
+      this.radius = radius ||8;
+      var geometry = new THREE.SphereBufferGeometry( this.radius, 32, 32 );
+      //var lineMaterial = new THREE.MeshBasicMaterial( { wireframe: true } );
+      var phongMaterial = new THREE.MeshPhongMaterial({color : 0xffffff});
+
+      var sphere = new THREE.Mesh( geometry, phongMaterial ); 
+      sphere.castShadow = true;   
+      this.setObject3D(sphere);
+      this.object3D.name = 'TFollowGhost';
+
+      var ghost = new TGhost(this);
+      if(parent)parent.addChild(this);
+      if(onComplete)onComplete(this);
+    }
+  }
+
+  );
 
 var TCompass = TObject.subclass('TCompass',
   'properties',{
@@ -16,16 +43,19 @@ var TCompass = TObject.subclass('TCompass',
     cube: null,
     dodecahedron: null,
     torusknot: null,
+    cube2: null,
   },
   'initialize',{
     initialize: function(parent, onComplete, distance, size){
       this.setObject3D(new THREE.Group());
       this.construct(new THREE.TetrahedronGeometry(2*size),    new THREE.Vector3(0,distance/2,distance), 0x111144, true);
-      var cube = this.construct(new THREE.BoxGeometry(size*2,size*2,size*2, 4,4,4),        new THREE.Vector3(distance, distance/2, 0), 0x440011, true);
+      var cube  = this.construct(new THREE.BoxGeometry(size*2,size*2,size*2, 4,4,4),        new THREE.Vector3(distance, distance/2, distance), 0x440011, true);
+      var cube2 = this.construct(new THREE.BoxGeometry(size*3,size*3,size*3, 4,4,4),        new THREE.Vector3(distance, distance/2, 0), 0xf48f42, true);
       this.construct(new THREE.SphereBufferGeometry( size, 16, 16 ),   new THREE.Vector3(0, distance/2,-distance), 0x114411, true);
       var torus = this.construct(new THREE.TorusKnotGeometry(size, size/3), new THREE.Vector3(-distance, distance/2,0), 0x333333, false);
       torus.object3D.rotation.y = Math.PI/2;
-      cube.object3D.rotation.y = Math.PI/4;
+      cube.object3D.rotation.y  = Math.PI/4;
+      cube2.object3D.rotation.y = Math.PI/4;
       if(parent)parent.addChild(this);
       if(onComplete)onComplete(this);
     },
@@ -35,7 +65,7 @@ var TCompass = TObject.subclass('TCompass',
       var lineMaterial = new THREE.MeshBasicMaterial( { wireframe: true } );
       var phongMaterial = new THREE.MeshPhongMaterial({color : color});
       var mesh = new THREE.Mesh( geo, phongMaterial);
-      var line = new THREE.Mesh( geo, lineMaterial ); 
+      var line = new THREE.Mesh( geo, lineMaterial );
       if(doScale)line.scale.set(1.05, 1.05, 1.05);
       mesh.add(line);
       return new TObject(trackBall, null, mesh);
@@ -53,7 +83,7 @@ var TEarth = TObject.subclass('users.TEarth',
     initialize: function(parent, onComplete, radius){
       this.radius = radius ||8;
       var geometry = new THREE.SphereBufferGeometry( this.radius, 32, 32 );
-      
+
   				var textureLoader = new THREE.TextureLoader();
   				var material = new THREE.MeshPhongMaterial( {
   					color: 0xffffff,
@@ -66,8 +96,8 @@ var TEarth = TObject.subclass('users.TEarth',
   					normalMap: textureLoader.load( Globals.imagePath+"earth_normalmap.png" ),
   					normalScale: new THREE.Vector2( 0.8, -0.8 )
   				} );
-      var sphere = new THREE.Mesh( geometry, material ); 
-      sphere.castShadow = true;   
+      var sphere = new THREE.Mesh( geometry, material );
+      sphere.castShadow = true;
       this.setObject3D(sphere);
       this.object3D.name = 'TEarth';
       if(parent)parent.addChild(this);
@@ -85,7 +115,7 @@ var TMoon = TObject.subclass('users.TMoon',
     initialize: function(parent, onComplete, radius){
       this.radius = radius ||8;
       var geometry = new THREE.SphereBufferGeometry( this.radius, 32, 32 );
-      
+
           var textureLoader = new THREE.TextureLoader();
           var material = new THREE.MeshPhongMaterial( {
             color: 0xeeeeee,
@@ -98,8 +128,8 @@ var TMoon = TObject.subclass('users.TMoon',
             bumpMap: textureLoader.load( Globals.imagePath+"Moon2-Bump.jpg" ),
             normalScale: new THREE.Vector2( 0.8, 0.8 )
           } );
-      var sphere = new THREE.Mesh( geometry, material ); 
-      sphere.castShadow = true;   
+      var sphere = new THREE.Mesh( geometry, material );
+      sphere.castShadow = true;
       this.setObject3D(sphere);
       this.object3D.name = 'TMoon';
       if(parent)parent.addChild(this);
@@ -117,7 +147,7 @@ var TCubeX = TObject.subclass('users.TCubeX',
       dw = dw || 5;
       dh = dh || 5;
       dd = dd || 5;
-      var geometry      = new THREE.BoxGeometry(w||10, h||10, d||10, dw, dh, dd );    
+      var geometry      = new THREE.BoxGeometry(w||10, h||10, d||10, dw, dh, dd );
   		var textureLoader = new THREE.TextureLoader();
   		var material = new THREE.MeshPhongMaterial( {
   			color: 0xdddddd,
@@ -129,8 +159,8 @@ var TCubeX = TObject.subclass('users.TCubeX',
    			//normalMap: textureLoader.load( Globals.imagePath+"sci_fi_normal.jpg" ),
  			  normalScale: new THREE.Vector2( 0.8, -0.8 )
   		} );
-      var cube = new THREE.Mesh( geometry, material );  
-      cube.castShadow = true;   
+      var cube = new THREE.Mesh( geometry, material );
+      cube.castShadow = true;
       this.setObject3D(cube);
       this.object3D.name = 'TCubeX';
       if(parent)parent.addChild(this);
@@ -172,8 +202,8 @@ var TPlanets = TObject.subclass('users.TPlanets',
       var geometry      = new THREE.PlaneBufferGeometry(250, 250, 10, 10);
       var material      = new THREE.MeshBasicMaterial( {
             map: textureLoader.load( Globals.imagePath+planet ),
-            opacity:opacity, 
-            transparent:true, side: THREE.FrontSide} );  
+            opacity:opacity,
+            transparent:true, side: THREE.FrontSide} );
       return new THREE.Mesh(geometry, material);
     }
   }
@@ -194,7 +224,7 @@ var TUSA = TRectangle.subclass('users.TUSA',
   'initialize',{
     initialize: function($super, parent, onComplete){
       $super(parent, onComplete, 100, 50, 100, 50);
-      
+
       var textureLoader = new THREE.TextureLoader();
       var material = new THREE.MeshStandardMaterial( {
           color: 0x888888,
@@ -211,7 +241,7 @@ var TUSA = TRectangle.subclass('users.TUSA',
           //envMap: reflectionCube,
           //envMapIntensity: settings.envMapIntensity,
           side: THREE.DoubleSide
-        } );    
+        } );
       this.bumpMap = textureLoader.load( Globals.imagePath+"USADepth.jpg" );
       this.object3D.material = material;
       this.object3D.raycast = function(){}; // suppress ray test
@@ -220,7 +250,7 @@ var TUSA = TRectangle.subclass('users.TUSA',
       var mat = new THREE.MeshStandardMaterial({color:0x7777ee, transparent:true, opacity:0.75});
       this.water.object3D.material = mat;
       var self = this;
-      this.displacementSlider = new TSlider(this, function(tObj){tObj.object3D.position.y = -self.extent.y/2 - 3}, function(val){self.setDisplacement(val)}, 40, 2, 0);     
+      this.displacementSlider = new TSlider(this, function(tObj){tObj.object3D.position.y = -self.extent.y/2 - 3}, function(val){self.setDisplacement(val)}, 40, 2, 0);
       this.waterSlider = new TSlider(this, function(tObj){tObj.object3D.position.y = -self.extent.y/2 - 6}, function(val){self.risingWater(val)}, 40, 2, 0);
       }
     },
@@ -248,5 +278,6 @@ export {
   TCubeX,
   TPlanets,
   TUSA,
-  TCompass
+  TCompass,
+  TFollowGhost
 }
