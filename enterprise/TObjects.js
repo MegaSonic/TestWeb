@@ -322,7 +322,7 @@ var TGhost = TObject.subclass('users.TGhost',
         console.log(distance.x + ', ' + distance.y + ', ' + distance.z);
         if (time) distance.multiplyScalar(time);
 
-        this.object3D.position..add(distance);
+        this.object3D.position.add(distance);
         //console.log(this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
 
       }
