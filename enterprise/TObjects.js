@@ -314,7 +314,7 @@ var TGhost = TObject.subclass('users.TGhost',
   {
     update: function(time, tScene){
       if (this.isChasing && this.chasing) {
-        this.distance = new Vector3(0, 0, 0);
+        this.distance = new THREE.Vector3(0, 0, 0);
         this.distance.copy(this.chasing.object3D.position);
         this.distance.sub(this.object3D.position);
         this.distance.normalize();
