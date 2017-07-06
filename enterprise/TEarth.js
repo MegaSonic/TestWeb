@@ -15,7 +15,8 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
   'properties',{
     action: null,
     radius: null,
-    ghost: null
+    ghost: null,
+    phongMaterial: null
   },
 
   'initialize',{
@@ -23,7 +24,7 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
       this.radius = radius ||8;
       var geometry = new THREE.SphereBufferGeometry( this.radius, 32, 32 );
       //var lineMaterial = new THREE.MeshBasicMaterial( { wireframe: true } );
-      var phongMaterial = new THREE.MeshPhongMaterial({color : 0xffffff});
+      phongMaterial = new THREE.MeshPhongMaterial({color : 0xffffff});
 
       var sphere = new THREE.Mesh( geometry, phongMaterial ); 
       sphere.castShadow = true;   
@@ -43,10 +44,12 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
   {
     onPointerEnter: function(pEvt){
       ghost.isChasing = false;
+      phongMaterial.color = 0xff0000;
       return true;
     },
     onPointerLeave: function(pEvt){
       ghost.isChasing = true;
+      phongMaterial.color = 0xffffff;
       return true;
     },
   },
