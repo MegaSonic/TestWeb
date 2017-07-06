@@ -285,7 +285,9 @@ var TGhost = TObject.subclass('users.TGhost',
     chasing: null,
     isChasing: null,
     chaseSpeed: null,
-    distance: null
+    distance: null,
+    deltaTime: null,
+    lastTime: null
   },
 
   'initialize', {
@@ -295,9 +297,11 @@ var TGhost = TObject.subclass('users.TGhost',
       else 
         this.chasing = Globals.tAvatar;
 
-      if (speed) chaseSpeed = speed;
-      else chaseSpeed = 1;
+      if (speed) this.chaseSpeed = speed;
+      else this.chaseSpeed = 1;
 
+      this.deltaTime = 0;
+      this.lastTime = 0;
       this.distance = new THREE.Vector3();
 
       isChasing = true;
@@ -314,15 +318,18 @@ var TGhost = TObject.subclass('users.TGhost',
   {
     update: function(time, tScene){
       if (this.isChasing && this.chasing) {
+        this.deltaTime = time - this.lastTime;
+        this.lastTime = time;
+
         this.distance = new THREE.Vector3(0, 0, 0);
         this.distance.copy(this.chasing.object3D.position);
         this.distance.sub(this.object3D.position);
         this.distance.normalize();
 
-        console.log(time);
+        console.log(this.deltaTime);
         console.log(this.chaseSpeed);
-        
-        this.distance.multiplyScalar(time);
+
+        this.distance.multiplyScalar(this.deltaTime);
         this.distance.multiplyScalar(this.chaseSpeed);
         //console.log(this.distance.x + ', ' + this.distance.y + ', ' + this.distance.z);
         this.object3D.position.add(this.distance);
