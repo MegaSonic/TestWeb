@@ -283,7 +283,7 @@ var TTrackball = TObject.subclass('users.TTrackball',
 var TGhost = TObject.subclass('users.TGhost', 
   'properties', {
     chasing: null,
-    isChasing: null,
+    isChasing: false,
     chaseSpeed: null,
     distance: null,
     deltaTime: null,
@@ -302,6 +302,7 @@ var TGhost = TObject.subclass('users.TGhost',
 
       this.deltaTime = 0;
       this.lastTime = 0;
+      this.isChasing = true;
       this.distance = new THREE.Vector3();
 
       this.setObject3D(new THREE.Group());
@@ -326,9 +327,6 @@ var TGhost = TObject.subclass('users.TGhost',
         this.distance.copy(this.chasing.object3D.position);
         this.distance.sub(this.object3D.position);
         this.distance.normalize();
-
-        console.log(this.deltaTime);
-        console.log(this.chaseSpeed);
 
         this.distance.multiplyScalar(this.deltaTime);
         this.distance.multiplyScalar(this.chaseSpeed);
