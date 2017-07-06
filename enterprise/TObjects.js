@@ -295,7 +295,7 @@ var TGhost = TObject.subclass('users.TGhost',
         this.chasing = Globals.tAvatar;
 
       if (speed) chaseSpeed = speed;
-      else chaseSpeed = 10;
+      else chaseSpeed = 1;
 
 
       isChasing = true;
@@ -319,7 +319,7 @@ var TGhost = TObject.subclass('users.TGhost',
         distance = (distance * chaseSpeed * time);
 
         this.object3D.position.set(this.object3D.position + distance);
-        //console.log(this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
+        console.log(this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
 
       }
 
