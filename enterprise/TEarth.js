@@ -45,17 +45,17 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
     onPointerEnter: function(pEvt){
       ghost.isChasing = false;
       phongMaterial.color = new THREE.Color( 'pink' );
-      var quaternion = new THREE.Quaternion();
-      quaternion.setFromAxisAngle( new THREE.Vector3(0, 1, 0), Math.PI);
-      this.goTo(this.object3D.position, quaternion, 1, 20);
+      //var quaternion = new THREE.Quaternion();
+      //quaternion.setFromAxisAngle( new THREE.Vector3(0, 1, 0), Math.PI);
+      //this.goTo(this.object3D.position, quaternion, 1, 20);
       return true;
     },
     onPointerLeave: function(pEvt){
       ghost.isChasing = true;
       phongMaterial.color = new THREE.Color('white');
-      var quaternion = new THREE.Quaternion();
-      quaternion.setFromAxisAngle( new THREE.Vector3(0, 1, 0), 0);
-      this.goTo(this.object3D.position, quaternion, 1, 20);
+      //var quaternion = new THREE.Quaternion();
+      //quaternion.setFromAxisAngle( new THREE.Vector3(0, 1, 0), 0);
+      //this.goTo(this.object3D.position, quaternion, 1, 20);
       return true;
     },
   },
