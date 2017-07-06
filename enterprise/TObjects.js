@@ -304,7 +304,7 @@ var TGhost = TObject.subclass('users.TGhost',
       this.lastTime = 0;
       this.distance = new THREE.Vector3();
 
-      this.isChasing = true;
+      //isChasing = true;
       this.setObject3D(new THREE.Group());
       this.object3D.name = 'TGhost';
 
@@ -320,7 +320,7 @@ var TGhost = TObject.subclass('users.TGhost',
       this.deltaTime = (time - this.lastTime) / 1000;
       this.lastTime = time;
 
-      if (this.isChasing && this.chasing.object3D.position) {
+      if (this.isChasing && this.chasing) {
         
 
         this.distance = new THREE.Vector3(0, 0, 0);
