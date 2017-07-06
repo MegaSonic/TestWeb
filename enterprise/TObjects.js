@@ -298,7 +298,7 @@ var TGhost = TObject.subclass('users.TGhost',
         this.chasing = Globals.tAvatar;
 
       if (speed) this.chaseSpeed = speed;
-      else this.chaseSpeed = 20;
+      else this.chaseSpeed = 5;
 
       this.deltaTime = 0;
       this.lastTime = 0;
