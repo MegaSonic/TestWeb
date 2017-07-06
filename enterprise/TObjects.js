@@ -303,8 +303,6 @@ var TGhost = TObject.subclass('users.TGhost',
       isChasing = true;
       this.setObject3D(new THREE.Group());
       this.object3D.name = 'TGhost';
-      
-      
 
       if (parent)
         parent.addChild(this);
@@ -315,7 +313,7 @@ var TGhost = TObject.subclass('users.TGhost',
   'behavior',
   {
     update: function(time, tScene){
-      if (isChasing) {
+      if (this.isChasing && this.chasing) {
         this.distance.copy(this.chasing.object3D.position);
         this.distance.sub(this.object3D.position);
         this.distance.normalize();
