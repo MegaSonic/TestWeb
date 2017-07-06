@@ -284,7 +284,8 @@ var TGhost = TObject.subclass('users.TGhost',
   'properties', {
     chasing: null,
     isChasing: null,
-    chaseSpeed: null
+    chaseSpeed: null,
+    distance: null
   },
 
   'initialize', {
@@ -297,6 +298,7 @@ var TGhost = TObject.subclass('users.TGhost',
       if (speed) chaseSpeed = speed;
       else chaseSpeed = 1;
 
+      this.distance = new THREE.Vector3();
 
       isChasing = true;
       this.setObject3D(new THREE.Group());
@@ -314,13 +316,12 @@ var TGhost = TObject.subclass('users.TGhost',
   {
     update: function(time, tScene){
       if (isChasing) {
-        var distance = new THREE.Vector3();
-        distance.copy(this.chasing.object3D.position);
-        distance.sub(this.object3D.position);
-        distance.normalize();
-        distance.multiplyScalar(chaseSpeed);
-        console.log(distance.x + ', ' + distance.y + ', ' + distance.z);
-        if (time) distance.multiplyScalar(time);
+        this.distance.copy(this.chasing.object3D.position);
+        this.distance.sub(this.object3D.position);
+        this.distance.normalize();
+        this.distance.multiplyScalar(this.chaseSpeed);
+        console.log(this.distance.x + ', ' + this.distance.y + ', ' + this.distance.z);
+        if (time) this.distance.multiplyScalar(time);
 
         this.object3D.position.add(distance);
         //console.log(this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
