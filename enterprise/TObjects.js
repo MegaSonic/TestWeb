@@ -314,11 +314,14 @@ var TGhost = TObject.subclass('users.TGhost',
   {
     update: function(time, tScene){
       if (isChasing) {
-        var distance = new THREE.Vector3(this.chasing.object3D.position - this.object3D.position);
+        var distance = new THREE.Vector3();
+        distance = this.chasing.object3D.position;
+        distance.sub(this.object3D.position);
         distance = distance.normalize();
-        distance = (distance * chaseSpeed * time);
+        distance.multiplyScalar(chaseSpeed);
+        distance.multiplyScalar(time);
 
-        this.object3D.position.set(this.object3D.position + distance);
+        this.object3D.position.set(this.object3D.position.add(distance));
         console.log(this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
 
       }
