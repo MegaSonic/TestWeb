@@ -317,7 +317,7 @@ var TGhost = TObject.subclass('users.TGhost',
         var distance = new THREE.Vector3();
         distance.copy(this.chasing.object3D.position);
         distance.sub(this.object3D.position);
-        distance = distance.normalize();
+        distance.normalize();
         distance.multiplyScalar(chaseSpeed);
         distance.multiplyScalar(time);
 
