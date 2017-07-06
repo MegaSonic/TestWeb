@@ -326,12 +326,9 @@ var TGhost = TObject.subclass('users.TGhost',
         this.distance.sub(this.object3D.position);
         this.distance.normalize();
 
-        console.log(this.deltaTime);
-        console.log(this.chaseSpeed);
-
         this.distance.multiplyScalar(this.deltaTime);
         this.distance.multiplyScalar(this.chaseSpeed);
-        //console.log(this.distance.x + ', ' + this.distance.y + ', ' + this.distance.z);
+        console.log(this.distance.x + ', ' + this.distance.y + ', ' + this.distance.z);
         this.object3D.position.add(this.distance);
 
         //console.log(this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
