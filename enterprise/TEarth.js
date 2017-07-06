@@ -22,7 +22,7 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
   'initialize',{
     initialize: function(parent, onComplete, radius){
       this.radius = radius ||8;
-      var geometry = new THREE.SphereBufferGeometry( this.radius, 32, 32 );
+      var geometry = new THREE.DodecahedronBufferGeometry( this.radius);
       //var lineMaterial = new THREE.MeshBasicMaterial( { wireframe: true } );
       phongMaterial = new THREE.MeshPhongMaterial({color : 0xffffff});
 
@@ -45,11 +45,17 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
     onPointerEnter: function(pEvt){
       ghost.isChasing = false;
       phongMaterial.color = new THREE.Color( 'pink' );
+      var quaternion = new THREE.Quaternion();
+      quaternion.setFromAxisAngle( new THREE.Vector3(0, 1, 0), Math.PI);
+      this.goTo(this.object3D.position, quaternion, 1, 20);
       return true;
     },
     onPointerLeave: function(pEvt){
       ghost.isChasing = true;
       phongMaterial.color = new THREE.Color('white');
+      var quaternion = new THREE.Quaternion();
+      quaternion.setFromAxisAngle( new THREE.Vector3(0, 1, 0), 0);
+      this.goTo(this.object3D.position, quaternion, 1, 20);
       return true;
     },
   },
