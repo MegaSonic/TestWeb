@@ -43,7 +43,6 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
   {
     onPointerEnter: function(pEvt){
       ghost.isChasing = false;
-      ghost.goToHere = null;
       console.log('Stopped chasing!');
       return true;
     },
