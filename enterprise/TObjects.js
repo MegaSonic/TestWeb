@@ -318,7 +318,7 @@ var TGhost = TObject.subclass('users.TGhost',
   {
     update: function(time, tScene){
       if (this.isChasing && this.chasing) {
-        this.deltaTime = time - this.lastTime;
+        this.deltaTime = (time - this.lastTime) / 1000;
         this.lastTime = time;
 
         this.distance = new THREE.Vector3(0, 0, 0);
