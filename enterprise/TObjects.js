@@ -298,13 +298,13 @@ var TGhost = TObject.subclass('users.TGhost',
         this.chasing = Globals.tAvatar;
 
       if (speed) this.chaseSpeed = speed;
-      else this.chaseSpeed = 5;
+      else this.chaseSpeed = 10;
 
       this.deltaTime = 0;
       this.lastTime = 0;
       this.distance = new THREE.Vector3();
 
-      isChasing = true;
+      this.isChasing = true;
       this.setObject3D(new THREE.Group());
       this.object3D.name = 'TGhost';
 
@@ -317,9 +317,11 @@ var TGhost = TObject.subclass('users.TGhost',
   'behavior',
   {
     update: function(time, tScene){
+      this.deltaTime = (time - this.lastTime) / 1000;
+      this.lastTime = time;
+
       if (this.isChasing && this.chasing) {
-        this.deltaTime = (time - this.lastTime) / 1000;
-        this.lastTime = time;
+        
 
         this.distance = new THREE.Vector3(0, 0, 0);
         this.distance.copy(this.chasing.object3D.position);
