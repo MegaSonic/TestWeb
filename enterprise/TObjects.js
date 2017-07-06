@@ -320,7 +320,7 @@ var TGhost = TObject.subclass('users.TGhost',
       this.deltaTime = (time - this.lastTime) / 1000;
       this.lastTime = time;
 
-      conole.log(this.chasing.object3D.position);
+      console.log(this.chasing.object3D.position);
 
       if (this.isChasing && this.chasing) {
         
