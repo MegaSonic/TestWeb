@@ -63,6 +63,7 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
   {
     update: function(time, tScene){
       this.object3D.position.copy(ghost.object3D.position);
+      if (!ghost.isChasing) this.object3D.rotation.y += 0.4;
 
     }
   }
