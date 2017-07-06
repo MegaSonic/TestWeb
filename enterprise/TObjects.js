@@ -283,15 +283,20 @@ var TTrackball = TObject.subclass('users.TTrackball',
 var TGhost = TObject.subclass('users.TGhost', 
   'properties', {
     chasing: null,
-    isChasing: null
+    isChasing: null,
+    chaseSpeed: null
   },
 
   'initialize', {
-    initialize: function(parent, chase) {
+    initialize: function(parent, chase, speed) {
       if (chase)
         this.chasing = chase;
       else 
         this.chasing = Globals.tAvatar;
+
+      if (speed) chaseSpeed = speed;
+      else chaseSpeed = 10;
+
 
       isChasing = true;
       this.setObject3D(new THREE.Group());
@@ -309,7 +314,11 @@ var TGhost = TObject.subclass('users.TGhost',
   {
     update: function(time, tScene){
       if (isChasing) {
-        this.goTo(this.chasing.object3D.position, null, null, 360);
+        var distance = new THREE.Vector3(this.chasing.object3D.position - this.object3D.position);
+        distance = distance.normalize();
+        distance = (distance * chaseSpeed * time);
+
+        this.object3D.position.set(this.object3D.position + distance);
         //console.log(this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
 
       }
