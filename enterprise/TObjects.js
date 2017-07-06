@@ -304,7 +304,7 @@ var TGhost = TObject.subclass('users.TGhost',
       this.lastTime = 0;
       this.distance = new THREE.Vector3();
 
-      isChasing = true;
+      this.isChasing = true;
       this.setObject3D(new THREE.Group());
       this.object3D.name = 'TGhost';
 
