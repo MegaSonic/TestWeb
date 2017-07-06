@@ -44,12 +44,12 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
   {
     onPointerEnter: function(pEvt){
       ghost.isChasing = false;
-      phongMaterial.color = 0xff0000;
+      phongMaterial.color = new THREE.Color( 'pink' );
       return true;
     },
     onPointerLeave: function(pEvt){
       ghost.isChasing = true;
-      phongMaterial.color = 0xffffff;
+      phongMaterial.color = new THREE.Color('white');
       return true;
     },
   },
