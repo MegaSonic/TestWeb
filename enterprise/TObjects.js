@@ -308,7 +308,7 @@ var TGhost = TObject.subclass('users.TGhost',
       this.setObject3D(new THREE.Group());
       this.object3D.name = 'TGhost';
 
-      this.object3D.position = new THREE.Vector3(0, 0, 5);
+      this.object3D.position.set(0, 0, 10);
 
       if (parent)
         parent.addChild(this);
