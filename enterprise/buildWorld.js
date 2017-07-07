@@ -181,9 +181,6 @@ var World = Object.subclass('World',
           self.setupMobile();
           }, 1000);
         return true;
-      }, function(val) {
-        new TFollowGhost(Globals.tScene, null, 30);
-        return true;
 
       });
     });
@@ -216,7 +213,7 @@ var World = Object.subclass('World',
       var tWindow = new TWindow(null, null, 'USA Terrain', 1.5, new TUSA(null, null));
       tWindow.display();
       menu.addWindow('USA Terrain', tWindow);
-    })
+    });
 
     menu.addItem('The Earth', () => {
       // Allows the user to spin or move the attached object
@@ -228,6 +225,14 @@ var World = Object.subclass('World',
       menu.addWindow('The Earth', tWindow);
     });
 
+    menu.addItem('Ghost', () => {
+      var tWindow = new TWindow(null, null, 'Ghost', 1, new TFollowGhost(null, null, 30), true);
+      tWindow.display();
+      menu.addWindow('Ghost', tWindow);
+
+
+
+    });
 
     menu.addItem('State of the World', async () => {
       let chart = await this.buildWorldChart(),

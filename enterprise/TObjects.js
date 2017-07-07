@@ -326,7 +326,19 @@ var TGhost = TObject.subclass('users.TGhost',
         
 
         this.distance = new THREE.Vector3(0, 0, 0);
+        console.log('World: ' + this.chasing.object3D.position.x + ', ' + this.chasing.object3D.position.y + ', ' + this.chasing.object3D.position.z);
+        this.chasing.object3D.worldToLocal(this.chasing.object3D.position);
+        console.log('Local: ' + this.chasing.object3D.position.x + ', ' + this.chasing.object3D.position.y + ', ' + this.chasing.object3D.position.z);
+        this.chasing.object3D.localToWorld(this.chasing.object3D.position);
+
+        console.log('This Local: ' + this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
+        this.object3D.worldToLocal(this.object3D.position);
+        console.log('This World: ' + this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
+        this.object3D.localToWorld(this.object3D.position);
+
+        //this.object3D.localToWorld(this.object3D.position);
         this.distance.copy(this.chasing.object3D.position);
+        this.object3D.worldToLocal(this.distance);
         this.distance.sub(this.object3D.position);
 
         if (this.distance.length() != 0)
@@ -336,7 +348,7 @@ var TGhost = TObject.subclass('users.TGhost',
         this.distance.multiplyScalar(this.chaseSpeed);
         //console.log(this.distance.x + ', ' + this.distance.y + ', ' + this.distance.z);
         this.object3D.position.add(this.distance);
-
+        //this.object3D.worldToLocal(this.object3D.position);
         //console.log(this.object3D.position.x + ', ' + this.object3D.position.y + ', ' + this.object3D.position.z);
 
       }
