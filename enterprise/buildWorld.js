@@ -182,7 +182,9 @@ var World = Object.subclass('World',
           }, 1000);
         return true;
       }, function(val) {
-        new TFollowGhost(Globals.tScene, null, 30);
+        
+        var ghost = new TFollowGhost(Globals.tScene, null, 30);
+        
         return true;
 
       });

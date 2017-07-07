@@ -8,6 +8,7 @@
 
 /*global THREE*/
 import { Globals, TObject } from "./TObject.js";
+import { TButton } from "./TButtons.js"
 import { TSlider, TRectangle, TTrackball, TGhost } from "./TObjects.js";
 
 var TFollowGhost = TObject.subclass('TFollowGhost', 
@@ -16,7 +17,9 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
     action: null,
     radius: null,
     ghost: null,
-    phongMaterial: null
+    phongMaterial: null,
+    cage: null,
+    bttn: null
   },
 
   'initialize',{
@@ -31,13 +34,17 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
       this.setObject3D(sphere);
       this.object3D.name = 'TFollowGhost';
 
-      console.log('Before adding ghost');
+      var cageGeometry = new THREE.SphereBufferGeometry( this.radius );
+      var cagePhongMaterial = new THREE.MeshPhongMaterial({color : 'blue'});
+      var cageMesh = new THREE.Mesh( cageGeometry, cagePhongMaterial );
+
+
+      bttn = new TButton(Globals.tScene, null, function() {self.toggleChase()}, cageMesh, 0);
+      bttn.object3D.position.set(50, 0, 50);
 
       ghost = new TGhost(this);
       if(parent)parent.addChild(this);
       if(onComplete)onComplete(this);
-
-      console.log('After adding ghost');
     }
   },
   'events',
@@ -58,6 +65,14 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
       //this.goTo(this.object3D.position, quaternion, 1, 20);
       return true;
     },
+    toggleChase: function() {
+      if (this.ghost.isChasing) {
+        this.ghost.isChasing = false;
+      }
+      else {
+        this.ghost.isChasing = true;
+      }
+    }
   },
   'behavior',
   {
