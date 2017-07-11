@@ -19,7 +19,8 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
     ghost: null,
     phongMaterial: null,
     cage: null,
-    bttn: null
+    bttn: null,
+    pauseActive: null
   },
 
   'initialize',{
@@ -27,58 +28,65 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
       this.radius = radius ||8;
       var geometry = new THREE.DodecahedronBufferGeometry( this.radius);
       //var lineMaterial = new THREE.MeshBasicMaterial( { wireframe: true } );
-      phongMaterial = new THREE.MeshPhongMaterial({color : 0xffffff});
+      this.phongMaterial = new THREE.MeshPhongMaterial({color : 0xffffff});
 
-      var sphere = new THREE.Mesh( geometry, phongMaterial ); 
+      var sphere = new THREE.Mesh( geometry, this.phongMaterial ); 
       sphere.castShadow = true;   
       this.setObject3D(sphere);
       this.object3D.name = 'TFollowGhost';
+      this.pauseActive = false;
+      //var cageGeometry = new THREE.SphereBufferGeometry( this.radius );
+      //var cagePhongMaterial = new THREE.MeshPhongMaterial({color : 'blue'});
+      //var cageMesh = new THREE.Mesh( cageGeometry, cagePhongMaterial );
 
-      var cageGeometry = new THREE.SphereBufferGeometry( this.radius );
-      var cagePhongMaterial = new THREE.MeshPhongMaterial({color : 'blue'});
-      var cageMesh = new THREE.Mesh( cageGeometry, cagePhongMaterial );
+      //bttn = new TButton(Globals.tScene, null, function() {self.toggleChase(self.ghost)}, cageMesh, 0);
+      //bttn.object3D.position.set(50, 0, 50);
 
-
-      bttn = new TButton(Globals.tScene, null, function() {self.toggleChase()}, cageMesh, 0);
-      bttn.object3D.position.set(50, 0, 50);
-
-      ghost = new TGhost(this);
+      this.ghost = new TGhost(this);
       if(parent)parent.addChild(this);
       if(onComplete)onComplete(this);
     }
+
+    
   },
   'events',
   {
     onPointerEnter: function(pEvt){
-      ghost.isChasing = false;
-      phongMaterial.color = new THREE.Color( 'pink' );
-      //var quaternion = new THREE.Quaternion();
-      //quaternion.setFromAxisAngle( new THREE.Vector3(0, 1, 0), Math.PI);
-      //this.goTo(this.object3D.position, quaternion, 1, 20);
+      if (!this.pauseActive) {
+        this.ghost.isChasing = false;
+        this.phongMaterial.color = new THREE.Color( 'pink' );
+      }
       return true;
     },
     onPointerLeave: function(pEvt){
-      ghost.isChasing = true;
-      phongMaterial.color = new THREE.Color('white');
-      //var quaternion = new THREE.Quaternion();
-      //quaternion.setFromAxisAngle( new THREE.Vector3(0, 1, 0), 0);
-      //this.goTo(this.object3D.position, quaternion, 1, 20);
+      if (!this.pauseActive) {
+        this.ghost.isChasing = true;
+        this.phongMaterial.color = new THREE.Color('white');
+      }
+      return true;
+    },
+    onPointerUp: function(pEvt) {
       return true;
     },
     toggleChase: function() {
-      if (this.ghost.isChasing) {
-        this.ghost.isChasing = false;
+      if (this.pauseActive) {
+        this.pauseActive = false;
+        this.ghost.paused = false;
       }
       else {
-        this.ghost.isChasing = true;
+        this.pauseActive = true;
+        this.ghost.paused = true;
       }
     }
+    
   },
   'behavior',
   {
     update: function(time, tScene){
-      this.object3D.position.copy(ghost.object3D.position);
-      if (!ghost.isChasing) this.object3D.rotation.y += 0.1;
+      this.object3D.position.copy(this.ghost.object3D.position);
+      if (!this.pauseActive) {
+        if (!this.ghost.isChasing) this.object3D.rotation.y += 0.1;
+      }
 
     }
   }

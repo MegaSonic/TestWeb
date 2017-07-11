@@ -287,7 +287,8 @@ var TGhost = TObject.subclass('users.TGhost',
     chaseSpeed: null,
     distance: null,
     deltaTime: null,
-    lastTime: null
+    lastTime: null,
+    paused: null
   },
 
   'initialize', {
@@ -304,6 +305,7 @@ var TGhost = TObject.subclass('users.TGhost',
       this.lastTime = 0;
       this.distance = new THREE.Vector3();
       this.isChasing = true;
+      this.paused = false;
 
       this.setObject3D(new THREE.Group());
       this.object3D.name = 'TGhost';
@@ -322,7 +324,7 @@ var TGhost = TObject.subclass('users.TGhost',
       this.deltaTime = (time - this.lastTime) / 1000;
       this.lastTime = time;
 
-      if (this.isChasing && this.chasing) {
+      if (this.isChasing && this.chasing && !this.paused) {
         
 
         this.distance = new THREE.Vector3(0, 0, 0);
