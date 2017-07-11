@@ -189,7 +189,7 @@ var World = Object.subclass('World',
         var cagePhongMaterial = new THREE.MeshPhongMaterial({color : 'blue'});
         var cageMesh = new THREE.Mesh( cageGeometry, cagePhongMaterial );
 
-        var bttn = new TButton(Globals.tScene, null, function() {ghost.toggleChase();}, cageMesh, 0);
+        var bttn = new TButton(Globals.tScene, null, function() {ghost.toggleChase(bttn);}, cageMesh, 0);
         bttn.object3D.position.set(50, 0, 50);
 
         return true;

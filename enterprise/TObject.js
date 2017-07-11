@@ -232,6 +232,10 @@ var TObject = Object.subclass('users.TObject',
         return this.goToHere.goTo(pos, quat, scale, count);
       },
 
+      cancelGoTo: function() {
+        this.goToHere = null;
+      },
+
       update: function(time, tScene){
         // nothing to do here
       },

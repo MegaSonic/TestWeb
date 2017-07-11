@@ -68,14 +68,16 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
     onPointerUp: function(pEvt) {
       return true;
     },
-    toggleChase: function() {
+    toggleChase: function(pCage) {
       if (this.pauseActive) {
         this.pauseActive = false;
         this.ghost.paused = false;
+        this.ghost.cancelGoTo();
       }
       else {
         this.pauseActive = true;
         this.ghost.paused = true;
+        this.ghost.goTo(pCage.object3D.position, null, null,);
       }
     }
     
