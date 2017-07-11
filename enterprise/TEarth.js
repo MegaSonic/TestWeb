@@ -77,7 +77,7 @@ var TFollowGhost = TObject.subclass('TFollowGhost',
       else {
         this.pauseActive = true;
         this.ghost.paused = true;
-        this.ghost.goTo(pCage.object3D.position, null, null,);
+        this.ghost.goTo(pCage.object3D.getWorldPosition(), null, null,);
       }
     }
     

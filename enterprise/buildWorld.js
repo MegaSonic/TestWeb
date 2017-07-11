@@ -186,11 +186,12 @@ var World = Object.subclass('World',
         var ghost = new TFollowGhost(Globals.tScene, null, 30);
         
         var cageGeometry = new THREE.SphereBufferGeometry( 30 );
-        var cagePhongMaterial = new THREE.MeshPhongMaterial({color : 'blue'});
+        var cagePhongMaterial = new THREE.MeshBasicMaterial( { wireframe: true } );
         var cageMesh = new THREE.Mesh( cageGeometry, cagePhongMaterial );
 
         var bttn = new TButton(Globals.tScene, null, function() {ghost.toggleChase(bttn);}, cageMesh, 0);
-        bttn.object3D.position.set(50, 0, 50);
+        var tWindow = new TWindow(Globals.tScene, null, 'Ghost', 1, bttn, true);
+        bttn.object3D.position.set(0, 0, 0);
 
         return true;
 
